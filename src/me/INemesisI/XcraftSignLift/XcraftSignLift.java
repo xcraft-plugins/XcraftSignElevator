@@ -29,7 +29,7 @@ public class XcraftSignLift extends JavaPlugin {
     pm.registerEvent(Event.Type.SIGN_CHANGE, blockListener, Event.Priority.Normal, this);
     pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
     
-    log.info("[" + getDescription().getName()+"] v"+getDescription().getVersion()+" by INemesisI loaded!");
+    log.info("[" + getDescription().getName()+"] v"+getDescription().getVersion()+" by INemesisI enabled!");
     }
         
     public String getName() {

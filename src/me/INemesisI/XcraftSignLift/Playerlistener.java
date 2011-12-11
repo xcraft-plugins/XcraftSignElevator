@@ -25,7 +25,7 @@ public class Playerlistener extends PlayerListener{
         			String[] lines = sign.getLines();
         			if ((lines[1].contains("[Lift Up]") || (lines[1].contains("[Lift Down]")))) {
         				Player player = event.getPlayer();
-        				if (event.getPlayer().hasPermission("XcraftSign.lift.use"))
+        				if (event.getPlayer().hasPermission("XcraftSignLift.use"))
         				plugin.liftHandler.handle(block, player);
         				else
         					player.sendMessage(plugin.getName() + ChatColor.RED + "Du hast keine Rechte, Lifte zu benutzen");

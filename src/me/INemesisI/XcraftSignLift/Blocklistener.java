@@ -16,7 +16,7 @@ public class Blocklistener extends BlockListener {
 	public void onSignChange(SignChangeEvent event) {
     	String[] lines = event.getLines();
     	if (lines[1].toLowerCase().contains("[lift up]") || lines[1].toLowerCase().contains("[lift down]")) {
-    		if (!event.getPlayer().hasPermission("XcraftSign.lift.create")) {
+    		if (!event.getPlayer().hasPermission("XcraftSignLift.create")) {
         		event.getPlayer().sendMessage(plugin.getName() + ChatColor.RED + "Du hast keine Rechte, Lifte zu erstellen!");
         		event.setCancelled(true);
         		return;
