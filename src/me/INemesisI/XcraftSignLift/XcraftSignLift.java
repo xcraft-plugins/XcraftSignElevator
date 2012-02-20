@@ -3,15 +3,13 @@ package me.INemesisI.XcraftSignLift;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class XcraftSignLift extends JavaPlugin {
 	 
     //ClassListeners
-	private final Blocklistener blockListener = new Blocklistener(this);
-	private final Playerlistener playerListener = new Playerlistener(this);
+	private final EventListener eventlistener = new EventListener(this);
     //ClassListeners
 	public LiftHandler liftHandler = new LiftHandler(this);
        
@@ -26,8 +24,7 @@ public class XcraftSignLift extends JavaPlugin {
 	public void onEnable() {
                
     PluginManager pm = this.getServer().getPluginManager();
-    pm.registerEvent(Event.Type.SIGN_CHANGE, blockListener, Event.Priority.Normal, this);
-    pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
+    pm.registerEvents(eventlistener, this);
     
     log.info("[" + getDescription().getName()+"] v"+getDescription().getVersion()+" by INemesisI enabled!");
     }
