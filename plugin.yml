@@ -10,7 +10,7 @@ permissions:
         children:
             XcraftSignLift.use: true
             XcraftSignLift.create: true
-        default: op
+        default: true
         
     XcraftSignLift.use:
         description: Acces to use [Lift Up/Down]

@@ -29,7 +29,7 @@ public class XcraftSignLift extends JavaPlugin {
     log.info("[" + getDescription().getName()+"] v"+getDescription().getVersion()+" by INemesisI enabled!");
     }
         
-    public String getName() {
+    public String getCName() {
       	return ChatColor.DARK_GRAY + "[" + this.getDescription().getName() + "] " + getChatColor();
    	}
     
@@ -38,21 +38,17 @@ public class XcraftSignLift extends JavaPlugin {
     }
     
     public String capitalize(String name) {
-    	String save = name.substring(0, name.indexOf("["));
-    	name = name.substring(name.indexOf("["), name.indexOf("]")+1);
     	String[] split = name.split(" ");
     	String string = "";
     	for (int i=0;i<split.length;i++) {
-    		String character = ""+ split[i].charAt(0);
-    		int num;
-			if (character.equals("[") ){  num = 1;
-			string += "[";
-			}
-    		else  num = 0;
-			if (i > 0) string += " ";
-    	string += Character.toUpperCase(split[i].charAt(num)) + split[i].substring(num+1, split[i].length());
+    		int index = 0;
+    		String c = String.valueOf(split[i].charAt(index));
+    		while(!c.matches("[a-zA-Z]")) {
+    			index++;
+    			c = String.valueOf(split[i].charAt(index));
+    		}
+    		string += split[i].replaceFirst(c, c.toUpperCase()) + " ";
     	}
-		return save+string;
-    
+    	return string.substring(0, string.length()-1);
     }
 }

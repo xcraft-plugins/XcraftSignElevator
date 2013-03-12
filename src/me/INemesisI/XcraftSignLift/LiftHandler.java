@@ -21,14 +21,14 @@ public class LiftHandler {
 		Sign sign = (Sign) block.getState();
 		String[] lines = sign.getLines();
 		Block tpblock = null;
-		if (lines[1].contains("[Lift Up]")) {
+		if (lines[1].equals("[Lift Up]")) {
 			tpblock =  getNextLiftAbove(block);
 		}
-		if (lines[1].contains("[Lift Down]")) {
+		if (lines[1].equals("[Lift Down]")) {
 			tpblock =  getNextLiftBelow(block);
 		}
 		if (tpblock == null) {
-			player.sendMessage(plugin.getName() + "Es gibt keinen zugehörigen Lift!");
+			player.sendMessage(plugin.getCName() + "Es gibt keinen zugehÃ¶rigen Lift!");
 			return;
 		}
 		Location loc = player.getLocation();
@@ -37,35 +37,36 @@ public class LiftHandler {
 		y =+ tpblock.getY();
 		loc.setY(y);
 		if (!hasBlockBelow(loc.getBlock())) {
-			player.sendMessage(plugin.getName() + "Es gibt keinen Block, auf dem du stehen könntest");
+			player.sendMessage(plugin.getCName() + "Es gibt keinen Block, auf dem du stehen kÃ¶nntest");
 			return;
 		}
 		if (!hasFreeAir(loc.getBlock())) {
-			player.sendMessage(plugin.getName() + "Es gibt keinen freien Platz!");
+			player.sendMessage(plugin.getCName() + "Es gibt keinen freien Platz!");
 			return;
 		}
 		player.teleport(getNextBlockBelow(loc));
 			if (!lines[0].isEmpty())
-				player.sendMessage(plugin.getName() + "Du bist nun hier: "+ChatColor.AQUA +lines[0]);
+				player.sendMessage(plugin.getCName() + "Du bist nun hier: "+ChatColor.AQUA +lines[0]);
 			
 	}
 		
 	
     public boolean isLift(Block block) {
     	Sign sign = (Sign) block.getState();
-    	String[] lines = sign.getLines();
-    	if (block.getType().equals(Material.SIGN) || block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)) 
-       	return (lines[1].contains("[Lift Up]") || lines[1].contains("[Lift Down]"));
+    	if (block.getType().equals(Material.SIGN) || block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)) {
+    		String[] lines = sign.getLines();
+    		return (lines[1].equals("[Lift Up]") || lines[1].equals("[Lift Down]"));
+    }
     	else return false;
     }
         
     public Block getNextLiftAbove(Block block) {
-        int max = 128-block.getY();
+        int max = 255-block.getY();
         for (int i=1;i<max;i++) {
         	Block face = block.getRelative(BlockFace.UP, i);
         	if (face.getType().equals(Material.SIGN) || face.getType().equals(Material.SIGN_POST) || face.getType().equals(Material.WALL_SIGN)) {
         		Sign sign = (Sign) face.getState();
-        		if(sign.getLine(1).contains("[Lift Down]"))
+        		if(sign.getLine(1).equals("[Lift Down]"))
         			return face;
         	}
         }
@@ -86,7 +87,7 @@ public class LiftHandler {
     }
     
     public boolean hasBlockBelow(Block block) {
-    	for (int i=1;i<3;i++) {
+    	for (int i=1;i<4;i++) {
     		Block face = block.getRelative(BlockFace.DOWN, i);
     		if (face.getTypeId() != 0)
     			return true;
