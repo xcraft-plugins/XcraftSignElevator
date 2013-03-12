@@ -22,7 +22,8 @@ public class EventListener implements Listener {
 		String[] lines = event.getLines();
 		if (lines[1].toLowerCase().equals("[lift up]") || lines[1].toLowerCase().equals("[lift down]")) {
 			if (!event.getPlayer().hasPermission("XcraftSignLift.create")) {
-				event.getPlayer().sendMessage(plugin.getCName() + ChatColor.RED + "Du hast keine Rechte, Lifte zu erstellen!");
+				event.getPlayer().sendMessage(
+						plugin.getCName() + ChatColor.RED + "Du hast keine Rechte, Lifte zu erstellen!");
 				event.setCancelled(true);
 				return;
 			}
@@ -40,9 +41,12 @@ public class EventListener implements Listener {
 				String[] lines = sign.getLines();
 				if ((lines[1].equals("[Lift Up]") || (lines[1].equals("[Lift Down]")))) {
 					Player player = event.getPlayer();
-					if (event.getPlayer().hasPermission("XcraftSignLift.use")) plugin.liftHandler.handle(block, player);
-					else
-						player.sendMessage(plugin.getCName() + ChatColor.RED + "Du hast keine Rechte, Lifte zu benutzen");
+					if (event.getPlayer().hasPermission("XcraftSignLift.use")) {
+						plugin.liftHandler.handle(block, player);
+					} else {
+						player.sendMessage(plugin.getCName() + ChatColor.RED
+								+ "Du hast keine Rechte, Lifte zu benutzen");
+					}
 				}
 			}
 		}
