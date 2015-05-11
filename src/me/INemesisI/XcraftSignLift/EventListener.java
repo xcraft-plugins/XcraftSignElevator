@@ -47,6 +47,7 @@ public class EventListener implements Listener {
 						player.sendMessage(plugin.getCName() + ChatColor.RED
 								+ "Du hast keine Rechte, Lifte zu benutzen");
 					}
+					event.setCancelled(true);
 				}
 			}
 		}
