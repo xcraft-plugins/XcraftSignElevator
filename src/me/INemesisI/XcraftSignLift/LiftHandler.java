@@ -43,8 +43,8 @@ public class LiftHandler {
 			return;
 		}
 		player.teleport(this.getNextBlockBelow(loc));
-		if (!lines[0].isEmpty()) {
-			player.sendMessage(plugin.getCName() + "Du bist nun hier: " + ChatColor.AQUA + lines[0]);
+		if (!lines[2].isEmpty()) {
+			player.sendMessage(plugin.getCName() + "Du bist nun hier: " + ChatColor.AQUA + lines[2]);
 		}
 
 	}
