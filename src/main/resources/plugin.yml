@@ -1,0 +1,19 @@
+name: XcraftSignLift
+authors: [Salami555, Voronwe, INemesisI]
+main: de.ardania.plugins.XcraftSignLift
+
+version: 1.18.0
+api-version: 1.17
+        
+permissions:
+    XcraftSignLift.*:
+        description: Access to all commands this plugin provides
+        children:
+            XcraftSignLift.use: true
+            XcraftSignLift.create: true
+        default: true
+        
+    XcraftSignLift.use:
+        description: Access to use [Lift Up/Down]
+    XcraftSignLift.create:
+        description: Access to create [Lift Up/Down]
