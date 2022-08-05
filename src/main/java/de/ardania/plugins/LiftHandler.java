@@ -10,11 +10,6 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 public class LiftHandler {
-    private final XcraftSignLift plugin;
-
-    public LiftHandler(XcraftSignLift instance) {
-        this.plugin = instance;
-    }
 
     public void handle(Block block, Sign sign, Player player) {
         String[] lines = sign.getLines();
@@ -25,23 +20,23 @@ public class LiftHandler {
             tpblock = this.getNextLiftBelow(block);
         }
         if (tpblock == null) {
-            player.sendMessage(plugin.getChatName() + "Es gibt keinen zugehörigen Lift!");
+            Messages.sendMessage(player, "Es gibt keinen zugehörigen Lift!");
             return;
         }
         Location loc = player.getLocation();
         double y = tpblock.getY();
         loc.setY(y);
         if (!this.hasBlockBelow(loc.getBlock())) {
-            player.sendMessage(plugin.getChatName() + "Es gibt keinen Block, auf dem du stehen könntest");
+            Messages.sendMessage(player, "Es gibt keinen Block, auf dem du stehen könntest");
             return;
         }
         if (!this.hasFreeAir(loc.getBlock())) {
-            player.sendMessage(plugin.getChatName() + "Es gibt keinen freien Platz!");
+            Messages.sendMessage(player, "Es gibt keinen freien Platz!");
             return;
         }
         player.teleport(this.getNextBlockBelow(loc));
         if (!lines[2].isEmpty()) {
-            player.sendMessage(plugin.getChatName() + "Du bist nun hier: " + ChatColor.AQUA + lines[2]);
+            Messages.sendMessage(player, "Du bist nun hier: " + ChatColor.AQUA + lines[2]);
         }
     }
 
@@ -51,7 +46,9 @@ public class LiftHandler {
             Sign sign;
             Block face = block.getRelative(BlockFace.UP, i);
             BlockState blockState = face.getState();
-            if (!(blockState instanceof Sign) || !(sign = (Sign)blockState).getLine(1).equals("[Lift Down]")) continue;
+            if (!(blockState instanceof Sign)
+                || !(sign = (Sign)blockState).getLine(1).equals("[Lift Down]"))
+                continue;
             return face;
         }
         return null;
@@ -63,7 +60,9 @@ public class LiftHandler {
             Sign sign;
             Block face = block.getRelative(BlockFace.DOWN, i);
             BlockState blockState = face.getState();
-            if (!(blockState instanceof Sign) || !(sign = (Sign)blockState).getLine(1).contains("[Lift Up]")) continue;
+            if (!(blockState instanceof Sign)
+                || !(sign = (Sign)blockState).getLine(1).contains("[Lift Up]"))
+                continue;
             return face;
         }
         return null;
@@ -72,7 +71,8 @@ public class LiftHandler {
     private boolean hasBlockBelow(Block block) {
         for (int i = 1; i < 4; ++i) {
             Block face = block.getRelative(BlockFace.DOWN, i);
-            if (!this.isSolid(face.getType())) continue;
+            if (!this.isSolid(face.getType()))
+                continue;
             return true;
         }
         return false;
@@ -82,7 +82,8 @@ public class LiftHandler {
         for (int i = 1; i < 4; ++i) {
             Block block = loc.getBlock();
             Block face = block.getRelative(BlockFace.DOWN, i);
-            if (!this.isSolid(face.getType())) continue;
+            if (!this.isSolid(face.getType()))
+                continue;
             int y = loc.getBlockY();
             loc.setY(y - i + 1);
             return loc;
