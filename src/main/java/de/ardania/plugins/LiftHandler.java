@@ -9,6 +9,12 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class LiftHandler {
     private final XcraftSignLift plugin;
 
@@ -104,120 +110,23 @@ public class LiftHandler {
         return false;
     }
 
+    private final Set<Material> customNonSolidMaterial = new HashSet<>();
     private boolean isSolid(Material mat) {
         if (mat.isSolid()) {
-            switch (mat) {
-                case ACACIA_DOOR: 
-                case ACACIA_FENCE_GATE: 
-                case ACACIA_PRESSURE_PLATE: 
-                case ACACIA_SIGN: 
-                case ACACIA_TRAPDOOR: 
-                case ACACIA_WALL_SIGN: 
-                case BIRCH_DOOR: 
-                case BIRCH_FENCE_GATE: 
-                case BIRCH_PRESSURE_PLATE: 
-                case BIRCH_SIGN: 
-                case BIRCH_TRAPDOOR: 
-                case BIRCH_WALL_SIGN: 
-                case BLACK_BANNER: 
-                case BLACK_WALL_BANNER: 
-                case BLUE_BANNER: 
-                case BLUE_WALL_BANNER: 
-                case BROWN_BANNER: 
-                case BROWN_WALL_BANNER: 
-                case CRIMSON_DOOR: 
-                case CRIMSON_FENCE_GATE: 
-                case CRIMSON_PRESSURE_PLATE: 
-                case CRIMSON_SIGN: 
-                case CRIMSON_TRAPDOOR: 
-                case CRIMSON_WALL_SIGN: 
-                case CYAN_BANNER: 
-                case CYAN_WALL_BANNER: 
-                case DARK_OAK_DOOR: 
-                case DARK_OAK_FENCE_GATE: 
-                case DARK_OAK_PRESSURE_PLATE: 
-                case DARK_OAK_SIGN: 
-                case DARK_OAK_TRAPDOOR: 
-                case DARK_OAK_WALL_SIGN: 
-                case DEAD_BRAIN_CORAL: 
-                case DEAD_BRAIN_CORAL_FAN: 
-                case DEAD_BRAIN_CORAL_WALL_FAN: 
-                case DEAD_BUBBLE_CORAL: 
-                case DEAD_BUBBLE_CORAL_FAN: 
-                case DEAD_BUBBLE_CORAL_WALL_FAN: 
-                case DEAD_FIRE_CORAL: 
-                case DEAD_FIRE_CORAL_FAN: 
-                case DEAD_FIRE_CORAL_WALL_FAN: 
-                case DEAD_HORN_CORAL: 
-                case DEAD_HORN_CORAL_FAN: 
-                case DEAD_HORN_CORAL_WALL_FAN: 
-                case DEAD_TUBE_CORAL: 
-                case DEAD_TUBE_CORAL_FAN: 
-                case DEAD_TUBE_CORAL_WALL_FAN: 
-                case GRAY_BANNER: 
-                case GRAY_WALL_BANNER: 
-                case GREEN_BANNER: 
-                case GREEN_WALL_BANNER: 
-                case HEAVY_WEIGHTED_PRESSURE_PLATE: 
-                case IRON_DOOR: 
-                case IRON_TRAPDOOR: 
-                case JUKEBOX: 
-                case JUNGLE_DOOR: 
-                case JUNGLE_FENCE_GATE: 
-                case JUNGLE_PRESSURE_PLATE: 
-                case JUNGLE_SIGN: 
-                case JUNGLE_TRAPDOOR: 
-                case JUNGLE_WALL_SIGN: 
-                case LIGHT_BLUE_BANNER: 
-                case LIGHT_BLUE_WALL_BANNER: 
-                case LIGHT_GRAY_BANNER: 
-                case LIGHT_GRAY_WALL_BANNER: 
-                case LIGHT_WEIGHTED_PRESSURE_PLATE: 
-                case LIME_BANNER: 
-                case LIME_WALL_BANNER: 
-                case MAGENTA_BANNER: 
-                case MAGENTA_WALL_BANNER: 
-                case OAK_DOOR: 
-                case OAK_FENCE_GATE: 
-                case OAK_PRESSURE_PLATE: 
-                case OAK_SIGN: 
-                case OAK_TRAPDOOR: 
-                case OAK_WALL_SIGN: 
-                case ORANGE_BANNER: 
-                case ORANGE_WALL_BANNER: 
-                case PINK_BANNER: 
-                case PINK_WALL_BANNER: 
-                case POLISHED_BLACKSTONE_PRESSURE_PLATE: 
-                case PURPLE_BANNER: 
-                case PURPLE_WALL_BANNER: 
-                case RED_BANNER: 
-                case RED_WALL_BANNER: 
-                case SPRUCE_DOOR: 
-                case SPRUCE_FENCE_GATE: 
-                case SPRUCE_PRESSURE_PLATE: 
-                case SPRUCE_SIGN: 
-                case SPRUCE_TRAPDOOR: 
-                case SPRUCE_WALL_SIGN: 
-                case STONE_PRESSURE_PLATE: 
-                case WARPED_DOOR: 
-                case WARPED_FENCE_GATE: 
-                case WARPED_PRESSURE_PLATE: 
-                case WARPED_SIGN: 
-                case WARPED_TRAPDOOR: 
-                case WARPED_WALL_SIGN: 
-                case WHITE_BANNER: 
-                case WHITE_WALL_BANNER: 
-                case YELLOW_BANNER: 
-                case YELLOW_WALL_BANNER: {
-                    return false;
-                }
-                default: {
-                    return true;
-                }
-            }
+            return !customNonSolidMaterial.contains(mat);
         } else {
             return false;
         }
+    }
+
+    public void setCustomNonSolidMaterials(List<String> nonSolidMaterials) {
+        customNonSolidMaterial.clear();
+        customNonSolidMaterial.addAll(
+            nonSolidMaterials.stream()
+                .map(Material::matchMaterial)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet())
+        );
     }
 }
 

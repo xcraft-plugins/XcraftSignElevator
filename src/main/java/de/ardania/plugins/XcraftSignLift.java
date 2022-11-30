@@ -17,6 +17,10 @@ public class XcraftSignLift extends JavaPlugin {
     public void onEnable() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this.eventlistener, this);
+        this.saveDefaultConfig();
+        liftHandler.setCustomNonSolidMaterials(
+            this.getConfig().getStringList("customNonSolidMaterials")
+        );
     }
 
     public String getChatName() {
